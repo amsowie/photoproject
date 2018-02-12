@@ -17,7 +17,7 @@ class User(db.Model):
     lname = db.Column(db.String(30), nullable=False)
     email = db.Column(db.String(40), nullable=False)
     password = db.Column(db.String(100), nullable=False)
-    unique = 
+    #unique = 
 
     def __repr__(self):  # pragma: no cover
         """Useful printout of user object"""
