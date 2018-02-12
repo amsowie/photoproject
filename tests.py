@@ -15,6 +15,12 @@ class FlaskTests(TestCase):
         self.client = app.test_client()
         app.config['TESTING'] = True  # shows debugging output
 
+        with self.client as c:
+            with c.session_transaction() as sess:
+                sess['user_name'] = 'Brian'
+                sess['user_id'] = 1
+
+
     def test_index(self):
             """Test the homepage route"""
 
