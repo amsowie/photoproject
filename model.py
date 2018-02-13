@@ -1,8 +1,9 @@
 from flask import Flask
 import bcrypt
-from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy import text as sa_text
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
+
 
 db = SQLAlchemy()
 
@@ -16,8 +17,12 @@ class User(db.Model):
     __tablename__ = "users"
 
     #u_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    user_id = db.Column(UUID(as_uuid=True), primary_key=True,
-                          server_default=sa_text("uuid_generate_v4()"))
+    #user_id = db.Column(UUID(as_uuid=True), primary_key=True)
+    #id = db.Column(db.UUID, primary_key=True, default=uuid.uuid4)
+    user_id = db.Column(UUID(as_uuid=True),
+                             server_default=text("uuid_generate_v4()"),
+                             primary_key=True)
+
     email = db.Column(db.String(40), nullable=False)
     password = db.Column(db.String(100), nullable=False)
 
@@ -41,7 +46,7 @@ def example_data():
     db.session.commit()
 
 
-def connect_to_db(app, db_uri='postgresql:///photo_share'):
+def connect_to_db(app, db_uri='postgresql:///photoshare'):
     """Connect the database to our Flask app."""
 
     # Configure to use our PostgresSQL database

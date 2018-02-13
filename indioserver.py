@@ -35,9 +35,9 @@ def login():
     """Login page process user info
 
     """
-    email = request.args.get('email')
-    password = request.args.get('pword')
-    button = request.args.get('submit')
+    email = request.form.get('email')
+    password = request.form.get('pword')
+    button = request.form.get('submit')
 
     user = User.query.filter(User.email == email).first()
 

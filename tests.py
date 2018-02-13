@@ -6,7 +6,23 @@ from indioserver import app
 from model import connect_to_db, db, example_data
 
 
-class FlaskTests(TestCase):
+class TestBasic(TestCase):
+
+    def setUp(self):
+        """Set this up before every test"""
+
+        self.client = app.test_client()
+        app.config['TESTING'] = True  # shows debugging output
+
+    def test_index(self):
+            """Test the homepage route"""
+
+            result = self.client.get("/")
+            self.assertEqual(result.status_code, 200)
+            self.assertIn('Sign In', result.data)
+
+
+class TestWithUsers(TestCase):
 
     def setUp(self):
         """Set this up before every test"""
@@ -30,13 +46,6 @@ class FlaskTests(TestCase):
 
         db.session.close()
         db.drop_all()  # get rid of fake data
-
-    def test_index(self):
-            """Test the homepage route"""
-
-            result = self.client.get("/")
-            self.assertEqual(result.status_code, 200)
-            self.assertIn('Welcome', result.data)  
 
 
     def test_user_login(self):
@@ -62,6 +71,8 @@ class FlaskTests(TestCase):
                                                    follow_redirects=True)
         self.assertEqual(result.status_code, 200)
         self.assertIn("No user", result.data)
+
+
 
 ##############################################################################
 
