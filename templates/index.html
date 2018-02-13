@@ -1,9 +1,22 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-  Welcome
-</body>
-</html>
+
+{% extends 'base.html' %}
+
+{% block title %} Welcome
+
+{% endblock %}
+
+{% block content %}
+
+<h2>Sign In or Create an Account</h2>
+  <form id="form-login" method=POST action="login">
+    <label for="email">Email:</label>
+    <input id="email" type="text" name="email" 
+           required placeholder="name@domain.com" />
+    <br><br>
+    <label for="pword">Password</label>
+    <input id="pword" type="password" name="pword" required />
+    <br><br>
+    <input id="login" type="submit" name="submit" value="Log In" />
+    <input id="register" type="submit" name="submit" value="Register" />
+  </form>
+{% endblock %}
